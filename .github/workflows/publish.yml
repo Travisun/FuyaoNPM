@@ -3,6 +3,7 @@ name: Publish to npm
 # 发布触发方式（二选一）：
 #   1. 推送 tag：git tag v1.0.1 && git push origin v1.0.1
 #   2. GitHub 网页创建 Release
+#
 on:
   push:
     tags:
