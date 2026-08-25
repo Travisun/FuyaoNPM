@@ -1,15 +1,15 @@
-# fuyao-api
+# @opptrix/fuyao
 
 [![官方文档](https://img.shields.io/badge/官网文档-fuyao.aicubes.cn-blue)](https://fuyao.aicubes.cn/docs)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Opptrix 投研工作台](https://img.shields.io/badge/%E6%8A%95%E7%A0%94%E5%BC%95%E6%93%8E-Opptrix%20%E6%8A%95%E7%A0%94%E5%B7%A5%E4%BD%9C%E5%8F%B0-6C5CE7)](https://github.com/Travisun/FuyaoNPM)
+[![Opptrix 投研工作台](https://img.shields.io/badge/%E6%8A%95%E7%A0%94%E5%BC%95%E6%93%8E-Opptrix%20%E6%8A%95%E7%A0%94%E5%B7%A5%E4%BD%9C%E5%8F%B0-6C5CE7)](https://github.com/Travisun/Opptrix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 ![A股行情](https://img.shields.io/badge/A股行情-%E2%9C%94%20snapshot%20%C2%B7%20K%E7%BA%BF%20%C2%B7%20财务%20%C2%B7%20指数-red)
 [![CI](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml/badge.svg)](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml)
 
 同花顺金融数据 API（https://fuyao.aicubes.cn ）的 TypeScript SDK，覆盖官方文档全部 **54 个 REST 端点**（MCP 工具不在范围内）。
 
-> **关于本项目**：[Opptrix 投研工作台](https://github.com/Travisun/FuyaoNPM) 正在使用同花顺扶摇（Fuyao）作为数据提供商之一。为便于投研场景下的标准化接入与长期维护，特地开发了本 Node.js SDK——将扶摇全量 REST 能力封装为类型安全、带限速与统一错误体系的 TypeScript 客户端，供 Opptrix 及社区直接复用。
+> **关于本项目**：[Opptrix 投研工作台](https://github.com/Travisun/Opptrix) 正在使用同花顺扶摇（Fuyao）作为数据提供商之一。为便于投研场景下的标准化接入与长期维护，特地开发了本 Node.js SDK——将扶摇全量 REST 能力封装为类型安全、带限速与统一错误体系的 TypeScript 客户端，供 Opptrix 及社区直接复用。
 
 - 零运行时依赖（仅使用 Node 18+ 内置 `fetch` / `AbortController`）
 - ESM + CJS 双格式产物，含完整 `.d.ts` 类型
@@ -22,7 +22,7 @@
 ## 安装
 
 ```bash
-npm install fuyao-api
+npm install @opptrix/fuyao
 ```
 
 要求 Node >= 18。
@@ -30,7 +30,7 @@ npm install fuyao-api
 ## 快速开始
 
 ```ts
-import { FuyaoClient } from 'fuyao-api';
+import { FuyaoClient } from '@opptrix/fuyao';
 
 const client = new FuyaoClient({
   apiKey: process.env.FUYAO_API_KEY!, // 在 https://fuyao.aicubes.cn/admin 签发
@@ -54,7 +54,7 @@ const hit = await client.meta.search({ q: '贵州茅台' });
 所有业务响应（含错误）均为 HTTP 200，SDK 在信封 `code !== 0` 时抛出 `FuyaoApiError`：
 
 ```ts
-import { FuyaoApiError, ErrorCode } from 'fuyao-api';
+import { FuyaoApiError, ErrorCode } from '@opptrix/fuyao';
 
 try {
   await client.aShare.prices.snapshot({ thscodes: '600519.SH' });

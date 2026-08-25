@@ -33,7 +33,7 @@ export type { FuyaoClientOptions, FetchLike } from './http';
  *
  * @example
  * ```ts
- * import { FuyaoClient } from 'fuyao-api';
+ * import { FuyaoClient } from '@opptrix/fuyao';
  *
  * const client = new FuyaoClient({ apiKey: process.env.FUYAO_API_KEY! });
  * const snap = await client.aShare.prices.snapshot({ thscodes: '600519.SH' });
