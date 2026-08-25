@@ -2,11 +2,15 @@
 
 同花顺金融数据 API（https://fuyao.aicubes.cn ）的 TypeScript SDK，覆盖官方文档全部 **54 个 REST 端点**（MCP 工具不在范围内）。
 
+> **关于本项目**：[Opptrix 投研工作台](https://github.com/Travisun/FuyaoNPM) 正在使用同花顺扶摇（Fuyao）作为数据提供商之一。为便于投研场景下的标准化接入与长期维护，特地开发了本 Node.js SDK——将扶摇全量 REST 能力封装为类型安全、带限速与统一错误体系的 TypeScript 客户端，供 Opptrix 及社区直接复用。
+
 - 零运行时依赖（仅使用 Node 18+ 内置 `fetch` / `AbortController`）
 - ESM + CJS 双格式产物，含完整 `.d.ts` 类型
 - 统一错误体系：`FuyaoApiError`（业务码）/ `FuyaoHttpError`（HTTP 层）/ `FuyaoTimeoutError`
+- 内置可选全局限速（`intervalMs`），避免触发上游限频
 - 客户端前置校验与服务端约束对齐（互斥参数、枚举白名单、日期格式、token 上限等）
 - 全量 JSDoc/TSDoc 注释；接口审计见 [`docs/API_AUDIT.md`](docs/API_AUDIT.md)
+- MIT 开源协议
 
 ## 安装
 

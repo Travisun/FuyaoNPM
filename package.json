@@ -42,5 +42,21 @@
     "tsup": "^8.3.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Travisun/FuyaoNPM.git"
+  },
+  "homepage": "https://github.com/Travisun/FuyaoNPM#readme",
+  "bugs": {
+    "url": "https://github.com/Travisun/FuyaoNPM/issues"
+  },
+  "author": {
+    "name": "Opptrix",
+    "url": "https://github.com/Travisun"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
