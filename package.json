@@ -1,6 +1,6 @@
 {
   "name": "@opptrix/fuyao",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "同花顺金融数据 API (fuyao.aicubes.cn) 官方 REST 接口 TypeScript SDK，覆盖 A 股行情、财务、指数、特色数据与基金全量端点。",
   "keywords": [
     "ths",
