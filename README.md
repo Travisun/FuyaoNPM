@@ -3,6 +3,8 @@
 [![官方文档](https://img.shields.io/badge/官网文档-fuyao.aicubes.cn-blue)](https://fuyao.aicubes.cn/docs)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Opptrix 投研工作台](https://img.shields.io/badge/%E6%8A%95%E7%A0%94%E5%BC%95%E6%93%8E-Opptrix%20%E6%8A%95%E7%A0%94%E5%B7%A5%E4%BD%9C%E5%8F%B0-6C5CE7)](https://github.com/Travisun/Opptrix)
+[![npm version](https://img.shields.io/npm/v/@opptrix/fuyao?logo=npm&logoColor=white&label=npm%20@opptrix/fuyao)](https://www.npmjs.com/package/@opptrix/fuyao)
+[![npm downloads](https://img.shields.io/npm/dm/@opptrix/fuyao)](https://www.npmjs.com/package/@opptrix/fuyao)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 ![A股行情](https://img.shields.io/badge/A股行情-%E2%9C%94%20snapshot%20%C2%B7%20K%E7%BA%BF%20%C2%B7%20财务%20%C2%B7%20指数-red)
 [![CI](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml/badge.svg)](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml)
