@@ -1,0 +1,46 @@
+{
+  "name": "fuyao-api",
+  "version": "1.0.0",
+  "description": "同花顺金融数据 API (fuyao.aicubes.cn) 官方 REST 接口 TypeScript SDK，覆盖 A 股行情、财务、指数、特色数据与基金全量端点。",
+  "keywords": [
+    "ths",
+    "a-share",
+    "stock",
+    "fund",
+    "financial-data",
+    "fuyao",
+    "aicubes",
+    "api-sdk"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
