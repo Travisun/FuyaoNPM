@@ -221,3 +221,95 @@ describe('持有人 / 分红 / 经理 / 公司 / 募集 / 资讯 / 行情', () =
     expect(res.data?.adjust).toBeNull();
   });
 });
+
+describe('基金财务报表（fund-financials）', () => {
+  const financialsRoutes: Record<string, (q: URLSearchParams) => unknown> = {
+    '/api/fund/financials/indicators': (q) => ({
+      timestamp: 1,
+      item: [
+        {
+          start_date_ms: 1672444800000,
+          end_date_ms: 1675123200000,
+          publish_date_ms: 1677782400000,
+          distribution_profit: 1.23,
+          current_profit: 4.56,
+          current_income: 7.89,
+          distribution_share_profit: 0.01,
+          average_nav_profit_margin: 2.34,
+          average_share_current_profit: 0.05,
+          share_nav: 1.02,
+          sum_share_nav: 3.04,
+          asset_nav: 5.06e9,
+          sum_nav_rate: 8.88,
+          nav_rate: 2.22,
+        },
+      ],
+    }),
+    '/api/fund/financials/income-statements': () => ({
+      timestamp: 1,
+      item: [
+        {
+          start_date_ms: 1672444800000,
+          end_date_ms: 1675123200000,
+          publish_date_ms: 1677782400000,
+          total_income: 111.0,
+          total_fee: 22.0,
+          total_profit: 33.0,
+          net_profit: 30.0,
+        },
+      ],
+    }),
+    '/api/fund/financials/balance-sheets': () => ({
+      timestamp: 1,
+      item: [
+        {
+          start_date_ms: 1672444800000,
+          end_date_ms: 1675123200000,
+          publish_date_ms: 1677782400000,
+          total_assets: 100.0,
+          total_liability: 20.0,
+          owner_total_equity: 80.0,
+          liability_and_owner_equity: 100.0,
+        },
+      ],
+    }),
+  };
+
+  it('三个端点路径与 fund_type/thscode 参数映射一致', async () => {
+    const { client, requests } = makeClient(financialsRoutes);
+    await client.funds.financials.indicators({ fundType: 'otc', thscode: '000037.OF' });
+    await client.funds.financials.incomeStatements({ fundType: 'otc', thscode: '000037.OF' });
+    await client.funds.financials.balanceSheets({ fundType: 'otc', thscode: '000037.OF' });
+
+    const paths = requests.map((r) => r.path);
+    expect(paths).toEqual([
+      '/api/fund/financials/indicators',
+      '/api/fund/financials/income-statements',
+      '/api/fund/financials/balance-sheets',
+    ]);
+    for (const r of requests) {
+      expect(r.query.get('fund_type')).toBe('otc');
+      expect(r.query.get('thscode')).toBe('000037.OF');
+    }
+  });
+
+  it('缺失 fundType 抛 TypeError', async () => {
+    const { client } = makeClient(financialsRoutes);
+    await expect(
+      async () => client.funds.financials.indicators({ thscode: '000037.OF' } as never),
+    ).rejects.toThrow(TypeError);
+  });
+
+  it('响应数据容器与字段类型契约（数值可空）', async () => {
+    const { client } = makeClient(financialsRoutes);
+    const ind = await client.funds.financials.indicators({ fundType: 'otc', thscode: '000037.OF' });
+    expect(ind.data?.item[0]?.nav_rate).toBe(2.22);
+    expect(ind.data?.item[0]?.share_nav).toBe(1.02);
+
+    const inc = await client.funds.financials.incomeStatements({ fundType: 'otc', thscode: '000037.OF' });
+    expect(inc.data?.item[0]?.net_profit).toBe(30.0);
+
+    const bal = await client.funds.financials.balanceSheets({ fundType: 'otc', thscode: '000037.OF' });
+    expect(bal.data?.item[0]?.liability_and_owner_equity).toBe(100.0);
+  });
+});

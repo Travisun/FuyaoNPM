@@ -8,7 +8,7 @@
  * - 行情接口只接收 thscode 且当前仅支持 ETF（非 ETF → code=3004）。
  * - 收益率/占比/回撤均为百分数原值（如 8.88 表示 8.88%）。
  *
- * 端点清单（25 个）见 README 与 docs/API_AUDIT.md 第 12 节。
+ * 端点清单（28 个）见 README 与 docs/API_AUDIT.md 第 12 节。
  */
 import type { FuyaoHttpClient } from '../http';
 import { assertNoComma, validateRequired } from './aShare';
@@ -484,7 +484,7 @@ export interface FundMarketHistoricalData {
 
 /**
  * 基金资源聚合根：profile/portfolio/performance/holders/corporateActions/
- * managers/companies/diagnostics/offerings/news/market 子资源。
+ * managers/companies/diagnostics/offerings/news/market/financials 子资源。
  *
  * 由 FuyaoClient 以 `client.funds` 暴露。
  */

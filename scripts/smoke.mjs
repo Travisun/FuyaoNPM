@@ -207,6 +207,12 @@ const cases = [
       (p) => client.funds.market.historical({ thscode: p.thscode, start: 1751328000000, end: 1759008000000 }),
       FUND_CANDS.filter((p) => p.fundType === 'exchange'),
     )],
+  ['56', 'financials.indicators', () =>
+    fundProbe((p) => client.funds.financials.indicators(p), FUND_CANDS)],
+  ['57', 'financials.incomeStatements', () =>
+    fundProbe((p) => client.funds.financials.incomeStatements(p), FUND_CANDS)],
+  ['58', 'financials.balanceSheets', () =>
+    fundProbe((p) => client.funds.financials.balanceSheets(p), FUND_CANDS)],
 ];
 
 /* ------------------------------------------------------------------ */

@@ -9,7 +9,7 @@
 ![A股行情](https://img.shields.io/badge/A股行情-%E2%9C%94%20snapshot%20%C2%B7%20K%E7%BA%BF%20%C2%B7%20财务%20%C2%B7%20指数-red)
 [![CI](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml/badge.svg)](https://github.com/Travisun/FuyaoNPM/actions/workflows/ci.yml)
 
-同花顺金融数据 API（https://fuyao.aicubes.cn ）的 TypeScript SDK，覆盖官方文档全部 **54 个 REST 端点**（MCP 工具不在范围内）。
+同花顺金融数据 API（https://fuyao.aicubes.cn ）的 TypeScript SDK，覆盖官方文档全部 **59 个 REST 端点**（MCP 工具不在范围内）。
 
 > **关于本项目**：[Opptrix 投研工作台](https://github.com/Travisun/Opptrix) 正在使用同花顺扶摇（Fuyao）作为数据提供商之一。为便于投研场景下的标准化接入与长期维护，特地开发了本 Node.js SDK——将扶摇全量 REST 能力封装为类型安全、带限速与统一错误体系的 TypeScript 客户端，供 Opptrix 及社区直接复用。
 
@@ -123,6 +123,9 @@ try {
 | `funds.offerings.list` | 新发募集 | GET `/api/fund/offerings/list` |
 | `funds.news.articleList` / `iterateArticles` | 资讯（游标分页） | GET `/api/fund/news/article-list` |
 | `funds.market.snapshot` / `historical` | ETF 行情 | GET `/api/fund/market/*` |
+| `funds.financials.indicators` | 基金财务指标 | GET `/api/fund/financials/indicators` |
+| `funds.financials.incomeStatements` | 基金利润表 | GET `/api/fund/financials/income-statements` |
+| `funds.financials.balanceSheets` | 基金资产负债表 | GET `/api/fund/financials/balance-sheets` |
 
 > 规划中未纳入：股票基础信息、股票所属同花顺指数查询、指数概况。
 

@@ -342,6 +342,9 @@ item[]：`thscode/ticker/name/last_price/price_change_ratio_pct/open_times/turno
 | 12.23 | `GET /api/fund/news/article-list` | fund_type, thscode | limit, offset(不透明游标，翻页原样回传) |
 | 12.24 | `GET /api/fund/market/snapshot` | thscode（不接收 fund_type，仅 ETF） | - |
 | 12.25 | `GET /api/fund/market/historical` | thscode, start, end(≤5 自然年) | interval(**仅 `1d`**，实测传 `1w`/`1mo` 返回 `1003`) |
+| 12.26 | `GET /api/fund/financials/indicators` | fund_type, thscode | - |
+| 12.27 | `GET /api/fund/financials/income-statements` | fund_type, thscode | - |
+| 12.28 | `GET /api/fund/financials/balance-sheets` | fund_type, thscode | - |
 
 关键响应要点：
 - **profile/detail item[]**：`thscode/ticker/fund_name/estab_date/company_id/mgmt_name/manager_name/fund_scale/unit_nav/manager_info[]/trade_rule[]/rate_info[]`
@@ -368,6 +371,10 @@ item[]：`thscode/ticker/name/last_price/price_change_ratio_pct/open_times/turno
   > 实测补充（2026-08-25）：当结果为空时服务端省略 `offset` 键（而非返回 null），仅返回 `{timestamp, limit, has_more}`；且当前环境对全部抽样基金（75+ 只）均返回空资讯列表。
 - **market/snapshot item[]**：`thscode/ticker/last_price/open_price/high_price/low_price/prev_price/price_change_ratio_pct/price_change/price_amplitude_ratio_pct/volume/turnover/turnover_ratio_pct`（非 ETF → `3004`）
 - **market/historical data**：`timestamp/thscode/interval("1d")/adjust(null)`；item[] `date_ms/volume/turnover/open_price/high_price/low_price/close_price`
+- **financials/indicators item[]**：`start_date_ms/end_date_ms/publish_date_ms/distribution_profit/current_profit/current_income/distribution_share_profit/average_nav_profit_margin/average_share_current_profit/share_nav/sum_share_nav/asset_nav/sum_nav_rate/nav_rate`（数值字段可能为 null）
+- **financials/income-statements item[]**：`start_date_ms/end_date_ms/publish_date_ms/total_income/total_fee/total_profit/net_profit`（数值字段可能为 null）
+- **financials/balance-sheets item[]**：`start_date_ms/end_date_ms/publish_date_ms/total_assets/total_liability/owner_total_equity/liability_and_owner_equity`（数值字段可能为 null）
+  > 实测补充（2026-08-25）：以 `000037.OF`(otc) 验证，`indicators` 返回 37 条、`income-statements`/`balance-sheets` 各返回 12 条，均为按报告期排列的明细列表。
 
 ---
 
@@ -375,7 +382,7 @@ item[]：`thscode/ticker/name/last_price/price_change_ratio_pct/open_times/turno
 
 以下页面为「敬请期待」，无可用端点：`stock-basics`、`ths-index-membership`、`index-overview`（指数基本信息/成分股/权重）、`a-share/prices` 的周月线（interval 当前仅 `1d`）。
 
-## 14. 端点清单汇总（共 54 个）
+## 14. 端点清单汇总（共 59 个）
 
 | # | 方法 | 路径 | SDK 方法 |
 |---|---|---|---|
@@ -410,4 +417,4 @@ item[]：`thscode/ticker/name/last_price/price_change_ratio_pct/open_times/turno
 | 29 | GET | /api/a-share/special-data/anomaly-analysis-list | specialData.anomalyAnalysisList |
 | 30 | GET | /api/a-share/special-data/anomaly-analysis-stock | specialData.anomalyAnalysisStock |
 | 31 | GET | /api/a-share/special-data/dragon-tiger-list | specialData.dragonTigerList |
-| 32–56 | GET | /api/fund/**（见第 12 节明细） | funds.* |
+| 32–59 | GET | /api/fund/**（见第 12 节明细） | funds.* |
