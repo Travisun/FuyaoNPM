@@ -174,3 +174,11 @@ export type {
   FundHistoryParams,
   FundReportDatesParams,
 } from './resources/funds';
+export type {
+  FundFinancialIndicatorItem,
+  FundIncomeStatementItem,
+  FundBalanceSheetItem,
+  FundFinancialIndicatorsData,
+  FundIncomeStatementsData,
+  FundBalanceSheetsData,
+} from './resources/funds';

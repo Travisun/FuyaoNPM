@@ -303,6 +303,97 @@ export interface CompanyDetailItem {
   scale: number;
 }
 
+
+/* ------------------------------------------------------------------ */
+/* 基金财务报表（fund-financials）                                      */
+/* ------------------------------------------------------------------ */
+
+/** 基金财务指标条目。 */
+export interface FundFinancialIndicatorItem {
+  /** 报告期起始时间毫秒戳。 */
+  start_date_ms: number;
+  /** 报告期结束时间毫秒戳。 */
+  end_date_ms: number;
+  /** 发布日期毫秒戳。 */
+  publish_date_ms: number;
+  /** 可分配利润。 */
+  distribution_profit: number | null;
+  /** 本期利润。 */
+  current_profit: number | null;
+  /** 本期收入。 */
+  current_income: number | null;
+  /** 每份可分配利润。 */
+  distribution_share_profit: number | null;
+  /** 平均净值利润率。 */
+  average_nav_profit_margin: number | null;
+  /** 平均每份本期利润。 */
+  average_share_current_profit: number | null;
+  /** 单位净值。 */
+  share_nav: number | null;
+  /** 累计单位净值。 */
+  sum_share_nav: number | null;
+  /** 基金资产净值。 */
+  asset_nav: number | null;
+  /** 累计净值增长率，百分数原值。 */
+  sum_nav_rate: number | null;
+  /** 净值增长率，百分数原值。 */
+  nav_rate: number | null;
+}
+
+/** 基金利润表条目。 */
+export interface FundIncomeStatementItem {
+  /** 报告期起始时间毫秒戳。 */
+  start_date_ms: number;
+  /** 报告期结束时间毫秒戳。 */
+  end_date_ms: number;
+  /** 发布日期毫秒戳。 */
+  publish_date_ms: number;
+  /** 收入合计。 */
+  total_income: number | null;
+  /** 费用合计。 */
+  total_fee: number | null;
+  /** 利润总额。 */
+  total_profit: number | null;
+  /** 净利润。 */
+  net_profit: number | null;
+}
+
+/** 基金资产负债表条目。 */
+export interface FundBalanceSheetItem {
+  /** 报告期起始时间毫秒戳。 */
+  start_date_ms: number;
+  /** 报告期结束时间毫秒戳。 */
+  end_date_ms: number;
+  /** 发布日期毫秒戳。 */
+  publish_date_ms: number;
+  /** 资产总计。 */
+  total_assets: number | null;
+  /** 负债合计。 */
+  total_liability: number | null;
+  /** 所有者权益合计。 */
+  owner_total_equity: number | null;
+  /** 负债和所有者权益总计。 */
+  liability_and_owner_equity: number | null;
+}
+
+/** 基金财务指标数据容器。 */
+export interface FundFinancialIndicatorsData {
+  timestamp: number;
+  item: FundFinancialIndicatorItem[];
+}
+
+/** 基金利润表数据容器。 */
+export interface FundIncomeStatementsData {
+  timestamp: number;
+  item: FundIncomeStatementItem[];
+}
+
+/** 基金资产负债表数据容器。 */
+export interface FundBalanceSheetsData {
+  timestamp: number;
+  item: FundBalanceSheetItem[];
+}
+
 /** 诊断详情条目。 */
 export interface FundDiagnosticsItem {
   thscode: string;
@@ -409,6 +500,7 @@ export class FundsResource {
   readonly offerings: FundOfferingsResource;
   readonly news: FundNewsResource;
   readonly market: FundMarketResource;
+  readonly financials: FundFinancialsResource;
 
   constructor(http: FuyaoHttpClient) {
     this.profile = new FundProfileResource(http);
@@ -417,6 +509,12 @@ export class FundsResource {
     this.holders = new FundHoldersResource(http);
     this.corporateActions = new FundCorporateActionsResource(http);
     this.managers = new FundManagersResource(http);
+    this.companies = new FundCompaniesResource(http);
+    this.diagnostics = new FundDiagnosticsResource(http);
+    this.offerings = new FundOfferingsResource(http);
+    this.news = new FundNewsResource(http);
+    this.market = new FundMarketResource(http);
+    this.financials = new FundFinancialsResource(http);
     this.companies = new FundCompaniesResource(http);
     this.diagnostics = new FundDiagnosticsResource(http);
     this.offerings = new FundOfferingsResource(http);
@@ -715,6 +813,62 @@ export class FundHoldersResource {
       fund_type: params.fundType,
       thscode: params.thscode,
       limit: params.limit,
+    });
+  }
+}
+
+
+/* ------------------------------------------------------------------ */
+/* 基金财务报表（fund-financials）                                      */
+/* ------------------------------------------------------------------ */
+
+/** 基金财务报表资源。 */
+export class FundFinancialsResource {
+  /** @internal */
+  constructor(private readonly http: FuyaoHttpClient) {}
+
+  /**
+   * 基金财务指标。
+   * `GET /api/fund/financials/indicators`
+   */
+  indicators(params: {
+    fundType: FundType;
+    thscode: string;
+  }): Promise<ApiResponse<FundFinancialIndicatorsData>> {
+    validateFundParams(params, 'funds.financials.indicators');
+    return this.http.get<FundFinancialIndicatorsData>('/api/fund/financials/indicators', {
+      fund_type: params.fundType,
+      thscode: params.thscode,
+    });
+  }
+
+  /**
+   * 基金利润表。
+   * `GET /api/fund/financials/income-statements`
+   */
+  incomeStatements(params: {
+    fundType: FundType;
+    thscode: string;
+  }): Promise<ApiResponse<FundIncomeStatementsData>> {
+    validateFundParams(params, 'funds.financials.incomeStatements');
+    return this.http.get<FundIncomeStatementsData>('/api/fund/financials/income-statements', {
+      fund_type: params.fundType,
+      thscode: params.thscode,
+    });
+  }
+
+  /**
+   * 基金资产负债表。
+   * `GET /api/fund/financials/balance-sheets`
+   */
+  balanceSheets(params: {
+    fundType: FundType;
+    thscode: string;
+  }): Promise<ApiResponse<FundBalanceSheetsData>> {
+    validateFundParams(params, 'funds.financials.balanceSheets');
+    return this.http.get<FundBalanceSheetsData>('/api/fund/financials/balance-sheets', {
+      fund_type: params.fundType,
+      thscode: params.thscode,
     });
   }
 }
