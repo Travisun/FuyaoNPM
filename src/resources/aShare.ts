@@ -54,8 +54,14 @@ export interface PriceSnapshotParams {
 export interface PriceHistoricalParams {
   /** 单只标的 thscode（不接受逗号）。必填。 */
   thscode: string;
-  /** K 线周期，当前仅支持 `1d`；默认 `1d`。 */
-  interval?: '1d';
+  /**
+   * K 线周期：`1d`(日线，默认) / `1w`(周线) / `1mo`(月线)。
+   *
+   * > 实测补充（2026-08-25）：官方文档标注「当前仅支持 1d」已过时，
+   * > 服务端实测支持 `1w` 与 `1mo`（其余写法如 `1W`/`week`/`month`
+   * > 返回 code=1002）。注意指数与基金行情接口仍仅支持 `1d`。
+   */
+  interval?: '1d' | '1w' | '1mo';
   /** 起始时间毫秒 Unix 时间戳。必填；缺失服务端返回 code=1001。 */
   start: number;
   /** 结束时间毫秒 Unix 时间戳。必填；窗口超 10 年返回 code=1003。 */

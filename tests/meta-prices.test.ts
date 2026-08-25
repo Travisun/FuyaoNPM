@@ -123,3 +123,26 @@ describe('A 股行情资源', () => {
     await expect(async () => client.aShare.prices.historical({ thscode: '600519.SH' })).rejects.toThrow(/start/);
   });
 });
+
+describe('历史 K 线周期（实测 1w/1mo 支持）', () => {
+  it('interval=1w / 1mo 正常透传', async () => {
+    const { client, requests } = makeClient({});
+    await client.aShare.prices.historical({ thscode: '600519.SH', interval: '1w', start: 1, end: 2 });
+    expect(requests[0]?.query.get('interval')).toBe('1w');
+
+    await client.aShare.prices.historical({ thscode: '600519.SH', interval: '1mo', start: 1, end: 2 });
+    expect(requests[1]?.query.get('interval')).toBe('1mo');
+  });
+
+  it('非法周期写法由服务端拒绝，SDK 不做额外限制', async () => {
+    const { client, requests } = makeClient({});
+    await client.aShare.prices.historical({
+      // @ts-expect-error 非法枚举
+      interval: 'week',
+      thscode: '600519.SH',
+      start: 1,
+      end: 2,
+    });
+    expect(requests[0]?.query.get('interval')).toBe('week');
+  });
+});

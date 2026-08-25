@@ -165,9 +165,9 @@ export interface PriceHistoricalData {
    */
   thscode?: string;
   /**
-   * K 线周期回显，固定 `1d`（实测返回，官方 REST 文档未列出）。
+   * K 线周期回显：A 股为 `1d`/`1w`/`1mo`；指数与基金固定 `1d`。
    */
-  interval?: '1d';
+  interval?: string;
   /** K 线列表。 */
   item: PriceBarItem[];
 }

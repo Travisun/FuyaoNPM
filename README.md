@@ -143,6 +143,7 @@ for await (const article of client.funds.news.iterateArticles({ fundType: 'excha
 - **命名映射**：SDK 采用 camelCase（如 `fundType`、`sortField`、`startDate`），序列化时自动映射为服务端的 snake_case query。
 - **多值**：数组参数以英文逗号连接（如 `assetType: ['fund-etf','fund-lof']`）。
 - **前置校验**（抛 `TypeError`，不发请求）：必填参数、thscode 单值接口拒绝逗号、财务三表 limit 与 start/end 互斥且需成对、`report` 格式 `yyyy-[1..4]`、日期格式 `yyyy-MM-dd`、分页 `page>=1`/`size∈[1,200]`、异动股票 ≤50、持有人 top limit ≤10 等。
+- **K 线周期**：`aShare.prices.historical` 实测支持 `1d`/`1w`/`1mo`（官方文档「仅支持 1d」已过时）；指数与基金行情接口仅支持 `1d`。
 - **时间戳**：一律毫秒 Unix 时间戳，时区 Asia/Shanghai。
 - **百分数**：`*_pct` 字段为百分数原值（`8.88` 表示 8.88%）。
 

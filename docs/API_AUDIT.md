@@ -93,7 +93,7 @@
 | 参数 | 类型 | 必需 | 默认 | 说明 |
 |---|---|---|---|---|
 | `thscode` | string | 是 | - | 单只标的，不接受逗号 |
-| `interval` | string | 是 | `1d` | 当前仅支持 `1d` |
+| `interval` | string | 是 | `1d` | 文档标注仅 `1d`；**实测补充（2026-08-25）**：服务端实际支持 `1d`/`1w`/`1mo`，其余写法（`1W`/`week`/`month`/分钟线）返回 `1002`。指数与基金行情接口实测仍仅支持 `1d`（基金显式 `1003` 拒绝、指数上游 `5003` 失败） |
 | `start` | long | 是 | - | 毫秒戳；缺失 → `1001` |
 | `end` | long | 是 | - | 毫秒戳；跨度超 10 年 → `1003` |
 | `adjust` | string | 否 | `forward` | `none` / `forward` / `backward` |
@@ -341,7 +341,7 @@ item[]：`thscode/ticker/name/last_price/price_change_ratio_pct/open_times/turno
 | 12.22 | `GET /api/fund/offerings/list` | subscribe(`active`/`upcoming`) | - |
 | 12.23 | `GET /api/fund/news/article-list` | fund_type, thscode | limit, offset(不透明游标，翻页原样回传) |
 | 12.24 | `GET /api/fund/market/snapshot` | thscode（不接收 fund_type，仅 ETF） | - |
-| 12.25 | `GET /api/fund/market/historical` | thscode, start, end(≤5 自然年) | interval(仅 `1d`) |
+| 12.25 | `GET /api/fund/market/historical` | thscode, start, end(≤5 自然年) | interval(**仅 `1d`**，实测传 `1w`/`1mo` 返回 `1003`) |
 
 关键响应要点：
 - **profile/detail item[]**：`thscode/ticker/fund_name/estab_date/company_id/mgmt_name/manager_name/fund_scale/unit_nav/manager_info[]/trade_rule[]/rate_info[]`
